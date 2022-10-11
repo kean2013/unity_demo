@@ -1,0 +1,19 @@
+/** This is an automatically generated class by FairyGUI. Please do not modify it. **/
+
+using FairyGUI;
+
+namespace Mail.MailUI
+{
+    public class MailUIBinder
+    {
+        public static void BindAll()
+        {
+            UIObjectFactory.SetPackageItemExtension(UI_Root.URL, typeof(UI_Root));
+            UIObjectFactory.SetPackageItemExtension(UI_CcMail.URL, typeof(UI_CcMail));
+            UIObjectFactory.SetPackageItemExtension(UI_BtnGroup.URL, typeof(UI_BtnGroup));
+            UIObjectFactory.SetPackageItemExtension(UI_BtnMail.URL, typeof(UI_BtnMail));
+            UIObjectFactory.SetPackageItemExtension(UI_CcMailContent.URL, typeof(UI_CcMailContent));
+            UIObjectFactory.SetPackageItemExtension(UI_CcAward.URL, typeof(UI_CcAward));
+        }
+    }
+}

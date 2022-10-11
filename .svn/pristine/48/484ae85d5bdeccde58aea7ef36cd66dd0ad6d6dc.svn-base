@@ -1,0 +1,94 @@
+syntax = "proto3";
+
+
+// 客户端使用
+package hotFix.proto;
+
+message Attachment {
+  int32 itemId = 1;
+  int32 itemType = 2;
+  int32 itemNum = 3;
+};
+
+message MailItem {
+  int64 mailId = 1;    //邮件ID
+  string subject = 2;   //标题
+  string content = 3;   //邮件内容
+  int64  sendId = 4;    //发件人ID
+  int64  recvId = 5;     //收件人ID
+  int64  createTime = 6; //发送时间
+  int64  readTime = 7;   //读取时间
+  repeated  Attachment attachment = 8;  // 附件列表
+  bool   isDeleted = 9; // 删除标记
+};
+
+message MailStatus {
+  bool hasRead = 1;
+  bool hasAttach = 2;
+  bool isEmpty = 3;
+  bool isDeleted = 4;
+};
+
+message PlayerMail {
+  map<int64, MailStatus> mail = 1;
+  repeated int64 removed = 2;
+};
+
+message MailListRequest {
+  int64 playerId = 1;
+  repeated int64  mail = 2;
+};
+
+message MailListReply {
+  int64 playerId = 1;
+  repeated MailItem mailItem = 2;
+};
+
+message CreateMailRequest {
+  int64  playerId = 1;
+  MailItem mailItem = 2;
+};
+
+message CreateMailReply {
+  int32 errno = 1;
+  int64 mailId = 2;
+};
+
+message MailRecvNotify {
+  MailItem mailItem = 1;
+};
+
+message ReadMailRequest {
+  int64 playerId = 1;
+  int64 mailId = 2;
+};
+
+message ReadMailReply {
+  int64 readTime = 1;
+};
+
+message GetAttachRequest {
+  int64 playerId = 1;
+  int64 mailId = 2;
+  repeated  Attachment attachment = 3;
+};
+
+message GetAttachReply {
+  int64 mailId = 1;
+  repeated  Attachment attachment = 2;
+};
+
+message RemoveMailRequest {
+  int64 playerId = 1;
+  int64 mailId = 2;
+};
+
+message RemoveMailReply {
+  int32 errno = 1;
+  int64 mailId = 2;
+};
+
+message QueryMailDB {
+  int64 playerId = 1;
+  int32 gatewayId = 2;
+};

@@ -1,0 +1,41 @@
+﻿using UnityEngine;
+using UnityWebSocket;
+using System.Collections.Generic;
+using System;
+using Google.Protobuf;
+using Com.Linekong.Game.Message.Proto;
+using pb = global::Google.Protobuf;
+using HotFix.Common;
+
+namespace HotFix.Net
+{
+    public class FakeServerMgr: Singleton<FakeServerMgr>
+    {
+        private Dictionary<Commandcode.COMMAND_CODE, Tuple<Commandcode.COMMAND_CODE, IMessage>> m_Actions;
+
+        public override void OnInit()
+        {
+            m_Actions = new Dictionary<Commandcode.COMMAND_CODE, Tuple<Commandcode.COMMAND_CODE, IMessage>>();
+            base.OnInit();
+        }
+
+        public override void OnUnInit()
+        {
+            base.OnUnInit();
+        }
+
+        public void Register(Commandcode.COMMAND_CODE send, Commandcode.COMMAND_CODE reply, IMessage msg)
+        {
+            m_Actions[send] = Tuple.Create(reply, msg);
+        }
+
+        public void SendTest(Commandcode.COMMAND_CODE msgid)
+        {
+            Tuple<Commandcode.COMMAND_CODE, IMessage> tmp;
+            if (m_Actions.TryGetValue(msgid, out tmp))
+            {
+                NetMgr.Instance.Broadcast((int)tmp.Item1, tmp.Item2.ToByteArray());
+            }
+        }
+    }
+}

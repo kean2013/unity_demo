@@ -1,0 +1,85 @@
+using HotFix.Enum;
+using HotFix.Event;
+using HotFix.Tool;
+using System;
+using UnityEngine;
+namespace HotFix.UI
+{
+    using Mgr;
+    using Enum;
+    using System.Reflection;
+
+    public class LoginUIView : BaseUIView
+    {
+        private LoginUIComp m_UiComp;
+
+        public LoginUIView()
+        {
+            CreateWindow("LoginUI", "Root");
+        }
+
+        public override void InitElements()
+        {
+            m_UiComp = new LoginUIComp(WndComp);
+            m_UiComp.m_GameStart.onClick.Add(GameStartBtnClick);
+            m_UiComp.m_LoginCP.m_Close.onClick.Add(CloseBtnClick);
+            m_UiComp.m_LoginCP.m_LoginBtn.onClick.Add(LoginBtnClick);
+            m_UiComp.m_ServerSelectBtn.onClick.Add(SelectBtnClick);
+
+            m_UiComp.m_LoginCP.m_username.text = PlayerSaveDataMgr.Instance.GetString(SaveDataKeyType.Account, UnityEngine.Random.Range(1, 0xffffffff).ToString());
+            m_UiComp.m_LoginCP.m_password.text = PlayerSaveDataMgr.Instance.GetString(SaveDataKeyType.PassWords, UnityEngine.Random.Range(1, 0xffffffff).ToString());
+        }
+
+        public override void OnHide()
+        {
+        }
+
+        public override void OnShow(params object[] para)
+        {
+
+        }
+
+        public override void RegisterEvent()
+        {
+            EventMgr.Instance.Register(HEventType.NetConnectEvent, NetConnectEventCallBack);
+        }
+
+        public override void UnRegisterEvent()
+        {
+            EventMgr.Instance.UnRegister(HEventType.NetConnectEvent, NetConnectEventCallBack);
+        }
+
+        private void GameStartBtnClick()
+        {
+            JLogger.Log(LogModule.Login, "game start btn click");
+            LoginUIMgr.Instance.Connect();
+        }
+        private void SelectBtnClick()
+        {
+
+        }
+        private void CloseBtnClick()
+        {
+
+        }
+        private void LoginBtnClick()
+        {
+            var name = m_UiComp.m_LoginCP.m_username.text;
+            var pwd = m_UiComp.m_LoginCP.m_password.text;
+            LoginUIMgr.Instance.LoginRequest(1, 1, name + "_" + pwd);
+            PlayerSaveDataMgr.Instance.SetString(SaveDataKeyType.Account, name);
+            PlayerSaveDataMgr.Instance.SetString(SaveDataKeyType.PassWords, pwd);
+            PlayerSaveDataMgr.Instance.Save();
+        }
+
+        private void NetConnectEventCallBack(HEvent hEvent)
+        {
+            var data = hEvent as NetConnectEvent;
+            if (data.State == 1)
+            {
+                m_UiComp.Ctrl_Root.selectedIndex = 1;
+            }
+        }
+
+    }
+}

@@ -1,0 +1,157 @@
+using Com.Linekong.Game.Message.Proto;
+using HotFix.Data;
+using HotFix.Enum;
+using HotFix.Event;
+using HotFix.FightClient;
+using HotFix.Mgr;
+using HotFix.Net;
+using HotFix.Tool;
+using System.Collections.Generic;
+using UnityEngine;
+namespace HotFix.UI
+{
+    using Common;
+    public class LoginUIMgr : Singleton<LoginUIMgr>
+    {
+        private bool isConnecting = false;
+        public override void OnInit()
+        {
+            NetMgr.Instance.Register(Commandcode.COMMAND_CODE.IdLoginReply, OnLoginReply);
+            NetMgr.Instance.Register(Commandcode.COMMAND_CODE.IdEnterGameReply, OnEnterGameReply);
+        }
+        public override void OnUnInit()
+        {
+            NetMgr.Instance.UnRegister(Commandcode.COMMAND_CODE.IdLoginReply, OnLoginReply);
+            NetMgr.Instance.UnRegister(Commandcode.COMMAND_CODE.IdEnterGameReply, OnEnterGameReply);
+        }
+        public void Connect()
+        {
+            if (!isConnecting)
+            {
+                //NetMgr.Instance.Connect("ws://192.168.110.85:9002/ws", () =>
+                //{
+                //    var login = new EnterFightRequest();
+                //    login.UserId = 1;
+                //    NetMgr.Instance.Send(Commandcode.COMMAND_CODE.IdEnterFightRequest, login);
+
+                //    JLogger.Log(Enum.LogModule.Login, $"login succ send IdEnterFightRequest UserId", login.UserId);
+                //},
+                //    (string err) =>
+                //    {
+                //        isConnecting = false;
+                //        JLogger.Log(Enum.LogModule.Login, $"login error = {err}");
+                //    },
+                //    (int code, string err) =>
+                //    {
+                //        isConnecting = false;
+                //        JLogger.Log(Enum.LogModule.Login, $"net close code = {code}, err = {err}");
+                //    }
+                //);
+                //return;
+
+                isConnecting = true;
+                NetMgr.Instance.Connect("ws://192.168.110.95:9001/ws", () =>
+                {
+                    JLogger.Log(Enum.LogModule.Login, "login succ");
+                    EventMgr.Get<NetConnectEvent>().Set(1).Send();
+                },
+                    (string err) =>
+                    {
+                        isConnecting = false;
+                        JLogger.Log(Enum.LogModule.Login, $"login error = {err}");
+                    },
+                    (int code, string err) =>
+                    {
+                        isConnecting = false;
+                        JLogger.Log(Enum.LogModule.Login, $"net close code = {code}, err = {err}");
+                    }
+                );
+            }
+        }
+
+        #region 发送消息
+        public void LoginRequest(int channel, int userId, string token)
+        {
+            var login = new LoginRequest();
+            var info = new AuthInfoRequest();
+            info.Channel = channel;
+            info.UserId = userId;
+            info.Token = token;
+            login.LoginInfo = info;
+            NetMgr.Instance.Send(Commandcode.COMMAND_CODE.IdLoginRequest, login);
+        }
+        public void EnterGameRequest()
+        {
+            var enter = new EnterGameRequest();
+            enter.UserId = NetDataMgr.Instance.Account.UserId;
+            enter.ServerId = 1;
+            //enter.CharId = 1;
+            NetMgr.Instance.Send(Commandcode.COMMAND_CODE.IdEnterGameRequest, enter);
+        }
+        #endregion
+        #region 接收消息
+        private void OnActiveReply(byte[] msg)
+        {
+
+        }
+        private void OnLoginReply(byte[] msg)
+        {
+            JLogger.Log(Enum.LogModule.Login, "login reply");
+            var reply = NetMgr.Instance.GetMsg<LoginReply>(msg);
+            NetDataMgr.Instance.Account.UserId = reply.UserId;
+
+            EnterGameRequest();
+
+        }
+        private void OnLoginOutReply(byte[] msg)
+        {
+
+        }
+        private void OnAccountBindReply(byte[] msg)
+        {
+
+        }
+        private void OnAccountUnBindReply(byte[] msg)
+        {
+
+        }
+        private void OnCreateCharRoleReply(byte[] msg)
+        {
+
+        }
+        private void OnCharListReply(byte[] msg)
+        {
+
+        }
+        private void OnEnterGameReply(byte[] msg)
+        {
+            UIMgr.Instance.Close<LoginUIView>();
+
+            SceneMgr.Instance.ChangeScene(new FightScene(1));
+
+            QuestUIMgr.Instance.InitChapterRequest();
+            QuestUIMgr.Instance.TaskRequest();
+            EnterGameReply reply = NetMgr.Instance.GetMsg<EnterGameReply>(msg);
+            EventMgr.Get<ObjectEvent>().Set(HEventType.OnEnterGameReply, reply).Send();
+
+            //編隊
+            var armyTroop = Tools.RepeatedField2List(reply.ArmyTroop);
+            NetDataMgr.Instance.FarmatTeam.InitTroopInfo(armyTroop);
+            //兵卡
+            var userId = NetDataMgr.Instance.Account.UserId;
+            var armyUnitsInfo = Tools.RepeatedField2List(reply.ArmyUnit);
+            for (int i = 0; i < armyUnitsInfo.Count; i++)
+            {
+                var data = new UnitsPropertyRequest();
+                data.UserId = (int)userId;
+                data.Level = armyUnitsInfo[i].Level;
+                data.UnitsId = armyUnitsInfo[i].UnitsId;
+                NetMgr.Instance.Send(Commandcode.COMMAND_CODE.IdUnitsPropertyRequest, data);
+
+            }
+            NetDataMgr.Instance.ArmyUnit.InitArmyUnitInfo(armyUnitsInfo);
+        }
+
+        #endregion
+    }
+}

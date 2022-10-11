@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="625,120">
+  <displayList>
+    <component id="n0_gpmi" name="btnReceiveAward" src="o1gob" fileName="Components/BtnReceiveAward.xml" xy="257,73" size="110,40"/>
+    <list id="n1_gpmi" name="list" xy="97,20" size="430,40" layout="row" overflow="scroll" colGap="10" defaultItem="ui://kmi84jw2o1goc" align="center" vAlign="middle">
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+    </list>
+  </displayList>
+</component>

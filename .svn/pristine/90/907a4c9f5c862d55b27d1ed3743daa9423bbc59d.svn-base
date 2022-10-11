@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="360,77" extention="Button">
+  <controller name="c_item" pages="0,,1," selected="0"/>
+  <controller name="c_red" pages="0,,1," selected="0"/>
+  <displayList>
+    <graph id="n0_gpmi" name="n0" xy="0,7" size="360,70" type="rect"/>
+    <loader id="n1_gpmi" name="n1" xy="1,10" size="65,65" url="ui://kmi84jw2o1go6" fill="scale" clearOnPublish="true"/>
+    <text id="n2_gpmi" name="n2" xy="69,10" size="68,24" fontSize="16" text="邮件标题"/>
+    <text id="n3_gpmi" name="n3" xy="69,36" size="40,19" fontSize="12" text="发件人"/>
+    <text id="n4_gpmi" name="n4" xy="69,57" size="143,16" fontSize="10" text="发件时间：2022/08/17 20:00:00"/>
+    <loader id="n5_gpmi" name="icon" xy="301,18" size="50,50" url="ui://kmi84jw2o1go7" fill="scale" clearOnPublish="true">
+      <gearDisplay controller="c_item" pages="0"/>
+    </loader>
+    <image id="n6_gpmi" name="red" src="o1go8" fileName="Images/wl_common_Icon_hongdian.png" xy="329,-9">
+      <gearDisplay controller="c_red" pages="0"/>
+    </image>
+  </displayList>
+  <Button mode="Radio" downEffect="dark" downEffectValue=".8"/>
+</component>

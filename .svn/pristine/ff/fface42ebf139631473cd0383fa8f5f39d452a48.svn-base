@@ -1,0 +1,27 @@
+/** This is an automatically generated class by FairyGUI. Please do not modify it. **/
+
+using FairyGUI;
+using FairyGUI.Utils;
+
+namespace Mail.MailUI
+{
+    public partial class UI_CcAward : GComponent
+    {
+        public GButton m_btnReceiveAward;
+        public GList m_list;
+        public const string URL = "ui://kmi84jw2o1goa";
+
+        public static UI_CcAward CreateInstance()
+        {
+            return (UI_CcAward)UIPackage.CreateObject("MailUI", "CcAward");
+        }
+
+        public override void ConstructFromXML(XML xml)
+        {
+            base.ConstructFromXML(xml);
+
+            m_btnReceiveAward = (GButton)GetChild("btnReceiveAward");
+            m_list = (GList)GetChild("list");
+        }
+    }
+}

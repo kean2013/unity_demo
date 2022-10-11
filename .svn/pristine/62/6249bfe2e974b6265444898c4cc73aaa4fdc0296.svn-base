@@ -1,0 +1,28 @@
+using Com.Linekong.Game.Message.Proto;
+using HotFix.Event;
+using HotFix.Mgr;
+using HotFix.Net;
+using HotFix.Tool;
+using UnityEngine;
+namespace HotFix.UI
+{
+    using Common;
+    public class LoadingUIMgr : Singleton<LoadingUIMgr>
+    {        
+        public override void OnInit()
+        {
+			//NetMgr.Instance.Register(Commandcode.COMMAND_CODE.IdLoginReply, OnLoginReply);
+        }
+        public override void OnUnInit()
+        {
+			//NetMgr.Instance.UnRegister(Commandcode.COMMAND_CODE.IdLoginReply, OnLoginReply);
+        }
+		
+        #region 发送消息
+		
+		#endregion
+        #region 消息回调
+		
+		#endregion
+    }
+}

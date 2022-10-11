@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<packageDescription id="kmi84jw2">
+  <resources>
+    <component id="o1go0" name="Root.xml" path="/" exported="true"/>
+    <component id="o1go1" name="CcMail.xml" path="/Components/" exported="true"/>
+    <component id="o1go2" name="BtnBack.xml" path="/Components/"/>
+    <component id="o1go3" name="BtnGroup.xml" path="/Components/"/>
+    <image id="o1go4" name="Icon_General_Profile.png" path="/Images/" exported="true"/>
+    <component id="o1go5" name="BtnMail.xml" path="/Components/"/>
+    <image id="o1go6" name="Reward_Universal_Shard.png" path="/Images/" exported="true"/>
+    <image id="o1go7" name="Fanfare_ChemistCrateClosed.png" path="/Images/" exported="true"/>
+    <image id="o1go8" name="wl_common_Icon_hongdian.png" path="/Images/" exported="true"/>
+    <component id="o1go9" name="CcMailContent.xml" path="/Components/"/>
+    <component id="o1goa" name="CcAward.xml" path="/Components/"/>
+    <component id="o1gob" name="BtnReceiveAward.xml" path="/Components/"/>
+    <component id="o1goc" name="BtnAward.xml" path="/Components/"/>
+    <image id="o1god" name="Reward_Gem.png" path="/Images/" exported="true"/>
+    <component id="o1goe" name="BtnAllReceive.xml" path="/Components/"/>
+    <image id="o1gof" name="Hub_EditBase_Btn.png" path="/Images/" exported="true"/>
+    <component id="o1gog" name="BtnDeleteRead.xml" path="/Components/"/>
+    <component id="o1goh" name="BtnDelete.xml" path="/Components/"/>
+    <component id="o1goi" name="BtnCollect.xml" path="/Components/"/>
+  </resources>
+  <publish name="" genCode="true"/>
+</packageDescription>

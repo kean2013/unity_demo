@@ -1,0 +1,25 @@
+{
+  "libview.firstColumnWidth": 353,
+  "libview.iconScale": 0,
+  "backgroundColor": 6710886,
+  "auxline1": true,
+  "canvasColor": 10066329,
+  "auxline2": true,
+  "doc.activeDoc": "ui://kmi84jw2o1go0",
+  "libview.twoColumn": false,
+  "libview.expandedNodes": [
+    "kmi84jw2",
+    "/",
+    "kmi84jw2",
+    "/Components/",
+    "kmi84jw2",
+    "/Images/"
+  ],
+  "doc.openedDocs": [
+    "ui://kmi84jw2o1go0"
+  ],
+  "snapToGrid": true,
+  "gridColor": 80,
+  "libview.currentGroup": "",
+  "gridSize": 30
+}

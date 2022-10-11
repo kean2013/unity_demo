@@ -1,0 +1,25 @@
+/** This is an automatically generated class by FairyGUI. Please do not modify it. **/
+
+using FairyGUI;
+using FairyGUI.Utils;
+
+namespace Mail.MailUI
+{
+    public partial class UI_Root : GComponent
+    {
+        public UI_CcMail m_ccMail;
+        public const string URL = "ui://kmi84jw2o1go0";
+
+        public static UI_Root CreateInstance()
+        {
+            return (UI_Root)UIPackage.CreateObject("MailUI", "Root");
+        }
+
+        public override void ConstructFromXML(XML xml)
+        {
+            base.ConstructFromXML(xml);
+
+            m_ccMail = (UI_CcMail)GetChild("ccMail");
+        }
+    }
+}

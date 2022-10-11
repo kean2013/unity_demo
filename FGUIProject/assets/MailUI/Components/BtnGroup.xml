@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="160,60" extention="Button">
+  <controller name="button" pages="0,up,1,down,2,over,3,selectedOver" selected="0"/>
+  <controller name="c_redPoint" pages="0,,1," selected="0"/>
+  <controller name="c_number" pages="0,,1," selected="0"/>
+  <displayList>
+    <graph id="n0_hs1f" name="n0" xy="0,0" size="160,60" touchable="false" type="rect" fillColor="#ff999999">
+      <gearDisplay controller="button" pages="0,2"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <graph id="n2_hs1f" name="n2" xy="0,0" size="160,60" touchable="false" type="rect" fillColor="#ffdddddd">
+      <gearDisplay controller="button" pages="1,3"/>
+      <relation target="" sidePair="width-width,height-height"/>
+    </graph>
+    <text id="n3_hs1f" name="title" xy="68,5" size="89,50" fontSize="16" vAlign="middle" autoSize="none" text="报告"/>
+    <loader id="n4_hs1f" name="icon" xy="8,5" size="50,50" url="ui://kmi84jw2o1go4" align="center" vAlign="middle" fill="scale"/>
+    <graph id="n5_hs1f" name="redPoint" xy="129,1" size="30,30" type="eclipse" lineColor="#ffff6699" fillColor="#ffff0000">
+      <gearDisplay controller="c_redPoint" pages="0"/>
+    </graph>
+    <text id="n6_hs1f" name="mailCount" xy="129,1" size="30,30" fontSize="16" color="#ffffff" align="center" vAlign="middle" autoSize="none" text="99">
+      <gearDisplay controller="c_number" pages="0"/>
+      <gearDisplay2 controller="c_redPoint" pages="0" condition="0"/>
+    </text>
+  </displayList>
+  <Button mode="Radio"/>
+</component>

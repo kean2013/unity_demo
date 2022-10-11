@@ -1,0 +1,47 @@
+/** This is an automatically generated class by FairyGUI. Please do not modify it. **/
+
+using FairyGUI;
+using FairyGUI.Utils;
+
+namespace Mail.MailUI
+{
+    public partial class UI_CcMail : GComponent
+    {
+        public Controller m_c_NoMail;
+        public GGraph m_bg;
+        public GTextField m_titleMail;
+        public GButton m_btnBack;
+        public GList m_listGroup;
+        public GTextField m_title;
+        public GList m_listTab;
+        public UI_CcMailContent m_ccMailContent;
+        public GButton m_btnAllReceive;
+        public GButton m_btnDeleteRead;
+        public GButton m_btnDelete;
+        public GButton m_btnCollect;
+        public const string URL = "ui://kmi84jw2o1go1";
+
+        public static UI_CcMail CreateInstance()
+        {
+            return (UI_CcMail)UIPackage.CreateObject("MailUI", "CcMail");
+        }
+
+        public override void ConstructFromXML(XML xml)
+        {
+            base.ConstructFromXML(xml);
+
+            m_c_NoMail = GetController("c_NoMail");
+            m_bg = (GGraph)GetChild("bg");
+            m_titleMail = (GTextField)GetChild("titleMail");
+            m_btnBack = (GButton)GetChild("btnBack");
+            m_listGroup = (GList)GetChild("listGroup");
+            m_title = (GTextField)GetChild("title");
+            m_listTab = (GList)GetChild("listTab");
+            m_ccMailContent = (UI_CcMailContent)GetChild("ccMailContent");
+            m_btnAllReceive = (GButton)GetChild("btnAllReceive");
+            m_btnDeleteRead = (GButton)GetChild("btnDeleteRead");
+            m_btnDelete = (GButton)GetChild("btnDelete");
+            m_btnCollect = (GButton)GetChild("btnCollect");
+        }
+    }
+}

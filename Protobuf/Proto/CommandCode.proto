@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package com.linekong.game.message.proto;
+
+enum COMMAND_CODE {
+  COMMAND = 0;
+  
+  ID_LoginRequest = 10001;
+  ID_LoginReply = 10002;
+}

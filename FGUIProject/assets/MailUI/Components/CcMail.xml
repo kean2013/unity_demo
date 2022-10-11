@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="1046,571">
+  <controller name="c_NoMail" exported="true" pages="0,,1," selected="1"/>
+  <displayList>
+    <graph id="n0_gpmi" name="bg" xy="0,0" size="1046,571" type="rect" fillColor="#ffdedede"/>
+    <text id="n1_gpmi" name="titleMail" xy="0,0" size="1046,41" fontSize="22" align="center" vAlign="middle" autoSize="none" text="邮件"/>
+    <component id="n2_gpmi" name="btnBack" src="o1go2" fileName="Components/BtnBack.xml" xy="986,0" size="60,42"/>
+    <list id="n4_gpmi" name="listGroup" xy="0,504" size="1045,67" layout="row" overflow="scroll" colGap="1" defaultItem="ui://kmi84jw2o1go3" align="center">
+      <item/>
+      <item title="法令"/>
+      <item title="联盟"/>
+      <item title="系统"/>
+      <item title="分组"/>
+    </list>
+    <text id="n7_gpmi" name="title" xy="449,232" size="148,34" fontSize="24" align="center" vAlign="middle" text="当前暂无邮件">
+      <gearDisplay controller="c_NoMail" pages="0"/>
+    </text>
+    <list id="n10_gpmi" name="listTab" xy="0,42" size="371,385" overflow="scroll" margin="-2,0,6,0" defaultItem="ui://kmi84jw2o1go5" align="center">
+      <gearDisplay controller="c_NoMail" pages="1"/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+      <item/>
+    </list>
+    <component id="n12_gpmi" name="ccMailContent" src="o1go9" fileName="Components/CcMailContent.xml" xy="387,57">
+      <gearDisplay controller="c_NoMail" pages="1"/>
+    </component>
+    <component id="n13_gpmi" name="btnAllReceive" src="o1goe" fileName="Components/BtnAllReceive.xml" xy="40,443" size="130,45">
+      <gearDisplay controller="c_NoMail" pages="1"/>
+    </component>
+    <component id="n14_gpmi" name="btnDeleteRead" src="o1gog" fileName="Components/BtnDeleteRead.xml" xy="233,443">
+      <gearDisplay controller="c_NoMail" pages="1"/>
+    </component>
+    <component id="n16_xj2k" name="btnDelete" src="o1goh" fileName="Components/BtnDelete.xml" xy="571,443">
+      <gearDisplay controller="c_NoMail" pages="1"/>
+    </component>
+    <component id="n17_xj2k" name="btnCollect" src="o1goi" fileName="Components/BtnCollect.xml" xy="768,443">
+      <gearDisplay controller="c_NoMail" pages="1"/>
+    </component>
+  </displayList>
+</component>

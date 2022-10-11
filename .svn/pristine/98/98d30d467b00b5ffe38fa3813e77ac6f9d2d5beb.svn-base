@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<component size="644,356">
+  <controller name="c_Award" pages="0,,1," selected="0"/>
+  <displayList>
+    <graph id="n0_gpmi" name="n0" xy="8,6" size="628,84" type="rect"/>
+    <text id="n1_gpmi" name="n1" xy="9,97" size="625,123" fontSize="16" autoSize="none" autoClearText="true" text="邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容邮件内容"/>
+    <text id="n2_gpmi" name="n2" xy="22,12" size="132,24" fontSize="16" text="邮件标题标题标题"/>
+    <text id="n3_gpmi" name="n3" xy="22,45" size="45,21" fontSize="14" text="发件人"/>
+    <text id="n4_gpmi" name="n4" xy="22,67" size="76,19" fontSize="12" text="邮件发送时间"/>
+    <component id="n9_gpmi" name="ccAward" src="o1goa" fileName="Components/CcAward.xml" xy="9,228">
+      <gearDisplay controller="c_Award" pages="0"/>
+    </component>
+  </displayList>
+</component>

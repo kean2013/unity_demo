@@ -1,0 +1,257 @@
+[
+  {
+    "tag": 1,
+    "name": "钻石",
+    "desc": "钻石",
+    "Icon": "resource_zuanshi",
+    "quality": 2,
+    "Prompt": 1,
+    "itemTag": 1,
+    "order": 10000,
+    "type": "item",
+    "use": 0,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "5000",
+    "text": 0
+  },
+  {
+    "tag": 2,
+    "name": "金币",
+    "desc": "金币",
+    "Icon": "resource_jinbi",
+    "quality": 1,
+    "Prompt": 1,
+    "itemTag": 1,
+    "order": 1000,
+    "type": "item",
+    "use": 0,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1,
+      2
+    ],
+    "itemValue": "5万",
+    "text": 0
+  },
+  {
+    "tag": 3,
+    "name": "粮食",
+    "desc": "粮食",
+    "Icon": "resource_liangshi",
+    "quality": 3,
+    "Prompt": 1,
+    "itemTag": 2,
+    "order": 100,
+    "type": "item",
+    "use": 0,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "50万",
+    "text": 0
+  },
+  {
+    "tag": 4,
+    "name": "钢铁",
+    "desc": "钢铁",
+    "Icon": "resource_iron",
+    "quality": 3,
+    "Prompt": 1,
+    "itemTag": 2,
+    "order": 100,
+    "type": "item",
+    "use": 0,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "",
+    "text": 0
+  },
+  {
+    "tag": 5,
+    "name": "木材",
+    "desc": "木材",
+    "Icon": "resource_mutou",
+    "quality": 3,
+    "Prompt": 1,
+    "itemTag": 2,
+    "order": 100,
+    "type": "item",
+    "use": 0,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "",
+    "text": 0
+  },
+  {
+    "tag": 6,
+    "name": "测试箱子1",
+    "desc": "测试箱子2",
+    "Icon": "prop_box1",
+    "quality": 3,
+    "Prompt": 1,
+    "itemTag": 2,
+    "order": 110,
+    "type": "item",
+    "use": 1,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "useItem": {
+      "useType": "reward",
+      "useNum": 1
+    },
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "",
+    "text": 0
+  },
+  {
+    "tag": 7,
+    "name": "军官经验书小",
+    "desc": "军官经验书小",
+    "Icon": "",
+    "quality": 1,
+    "Prompt": 1,
+    "itemTag": 2,
+    "order": 3,
+    "type": "item",
+    "use": 1,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "",
+    "text": 0
+  },
+  {
+    "tag": 8,
+    "name": "军官经验书中",
+    "desc": "军官经验书中",
+    "Icon": "",
+    "quality": 2,
+    "Prompt": 1,
+    "itemTag": 2,
+    "order": 2,
+    "type": "item",
+    "use": 1,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "",
+    "text": 0
+  },
+  {
+    "tag": 9,
+    "name": "军官经验书大",
+    "desc": "军官经验书大",
+    "Icon": "",
+    "quality": 3,
+    "Prompt": 1,
+    "itemTag": 2,
+    "order": 1,
+    "type": "item",
+    "use": 1,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "",
+    "text": 0
+  },
+  {
+    "tag": 10,
+    "name": "测试箱子2",
+    "desc": "测试箱子2",
+    "Icon": "prop_box2",
+    "quality": 3,
+    "Prompt": 1,
+    "itemTag": 3,
+    "order": 1,
+    "type": "item",
+    "use": 1,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "useItem": {
+      "useType": "reward",
+      "useNum": 2
+    },
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "",
+    "text": 0
+  },
+  {
+    "tag": 11,
+    "name": "测试箱子3",
+    "desc": "测试箱子3",
+    "Icon": "prop_box3",
+    "quality": 3,
+    "Prompt": 1,
+    "itemTag": 2,
+    "order": 1,
+    "type": "item",
+    "use": 1,
+    "maxLimit": 9999,
+    "tips": 0,
+    "access": 0,
+    "useItem": {
+      "useType": "reward",
+      "useNum": 3
+    },
+    "required_Level": "",
+    "automatic": 0,
+    "acquisition": [
+      1
+    ],
+    "itemValue": "",
+    "text": 0
+  }
+]

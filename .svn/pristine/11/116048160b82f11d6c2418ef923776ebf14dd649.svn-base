@@ -1,0 +1,280 @@
+﻿using UnityEngine;
+using UnityWebSocket;
+using System.Collections.Generic;
+using System;
+using Google.Protobuf;
+using HotFix.Tool;
+using Com.Linekong.Game.Message.Proto;
+using pb = global::Google.Protobuf;
+
+namespace HotFix.Net
+{
+    using Common;
+    public class NetMgr: Singleton<NetMgr>
+    {
+        public string m_Address = "ws://192.168.110.95:9001/ws";
+
+        private IWebSocket m_Socket;
+        private Action m_Succ;
+        private Action<string> m_Err;
+        private Action<int, string> m_Close;
+        private Dictionary<Commandcode.COMMAND_CODE, Action<byte[]>> m_Register;
+
+        private int m_Op;
+        public override void OnInit()
+        {
+            m_Socket = null;
+            m_Op = GetBitOp();
+            m_Register = new Dictionary<Commandcode.COMMAND_CODE, Action<byte[]>>();
+        }
+
+        public bool GetIsOneline()
+        {
+            return true;
+        }
+
+        public void Close()
+        {
+            if(m_Socket != null)
+            {
+                m_Socket.CloseAsync();
+                m_Socket = null;
+            }
+        }
+
+        private void ForceWriteInt32(Int32 value, byte[] buffer, ref Int32 position)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            for (int i = 3; i >= 0; i += m_Op)
+            {
+                buffer[position++] = bytes[i];
+            }
+        }
+
+        private Int32 ForceReadInt32(byte[] buffer, ref int position)
+        {
+            byte[] bytes = new byte[4];
+            for (int i = 3; i >= 0; i += m_Op)
+            {
+                bytes[i] = buffer[position++];
+            }
+            return BitConverter.ToInt32(bytes);
+        }
+
+        private int GetBitOp()
+        {
+            Int32 t = 1;
+            var bytes = BitConverter.GetBytes(t);
+            if(bytes[0] == 0)
+            {
+                return 1;
+            }
+            return -1;
+        }
+
+        public void Send(Commandcode.COMMAND_CODE msgid, IMessage imsg)
+        {
+            if (m_Socket != null && imsg != null)
+            {
+                SendBytes(msgid.GetHashCode(), imsg.ToByteArray());
+            }
+            
+            FakeServerMgr.Instance.SendTest(msgid);
+        }
+
+        private void SendBytes(Int32 msgid, byte[] msg)
+        {
+            var len = msg.Length;
+            if (len > 0)
+            {
+                byte[] buffer = new byte[len + 8];
+                Int32 position = 0;
+                ForceWriteInt32(len + 8, buffer, ref position);
+                ForceWriteInt32(msgid, buffer, ref position);
+                for (int i = 0; i < len; i++)
+                {
+                    buffer[position++] = msg[i];
+                }
+                m_Socket.SendAsync(buffer);
+            }
+        }
+
+        public void Connect(string addr, Action succ, Action<string> err, Action<int, string> close)
+        {
+            if(m_Socket == null)
+            {
+                m_Address = addr;
+                m_Socket = new UnityWebSocket.WebSocket(m_Address);
+                m_Socket.OnOpen += Socket_OnOpen;
+                m_Socket.OnMessage += Socket_OnMessage;
+                m_Socket.OnClose += Socket_OnClose;
+                m_Socket.OnError += Socket_OnError;
+                m_Socket.ConnectAsync();
+
+                m_Succ = succ;
+                m_Err = err;
+                m_Close = close;
+            }
+        }
+
+        public void OnDestroy()
+        {
+            if (m_Socket != null && m_Socket.ReadyState != WebSocketState.Closed)
+            {
+                m_Socket.CloseAsync();
+            }
+            m_Socket = null;
+        }
+
+        public int Status 
+        {
+            get { return m_Socket.ReadyState.GetHashCode(); } 
+        }
+
+        private void Socket_OnOpen(object sender, OpenEventArgs e)
+        {
+            JLogger.Log(Enum.LogModule.Net, string.Format("Connected: {0}", m_Address));
+            if(m_Succ != null)
+            {
+                m_Succ.Invoke();
+            }
+        }
+
+        private void Socket_OnMessage(object sender, MessageEventArgs e)
+        {
+            if (e.IsBinary)
+            {
+                byte[] msg = e.RawData;
+                var len = msg.Length;
+                if (len > 0)
+                {
+                    int position = 0;
+                    var msgLen = ForceReadInt32(msg, ref position);
+                    var msgid = ForceReadInt32(msg, ref position);
+
+                    if (msgLen != len)
+                    {
+                        JLogger.Error(Enum.LogModule.Net, $"get msg id = {msgid}, len error : {msgLen}!={len}");
+                        return;
+                    }
+
+                    var pb_len = msgLen - 8;
+                    byte[] buffer = new byte[pb_len];
+                    for(int i = 0; i < pb_len;)
+                    {
+                        buffer[i++] = msg[position++];    
+                    }
+
+                    Broadcast(msgid, buffer);
+
+                    if(msgid == (int)Commandcode.COMMAND_CODE.IdEnterFightReply)
+                    {
+                        var info = GetMsg<EnterFightReply>(buffer);
+                        if(info != null)
+                        {
+                            if(info.Result == 1)
+                            {
+                                var fightinfo = new FightInfoSync();
+                                fightinfo.ToUserId = 1;
+                                NetMgr.Instance.Send(Commandcode.COMMAND_CODE.IdSyncFightRequest, fightinfo);
+                                
+                                JLogger.Log(Enum.LogModule.Net, "IdEnterFightReply Result ", info.Result.ToString(), "Send ToUserId", fightinfo.ToUserId.ToString());
+                            }
+                            else
+                            {
+                                JLogger.Log(Enum.LogModule.Net, "IdEnterFightReply Result ", info.Result.ToString());
+                            }
+                        }
+                        
+                    }
+                    else if (msgid == (int)Commandcode.COMMAND_CODE.IdSyncFightReply)
+                    {
+                        var info = GetMsg<FightInfoSync>(buffer);
+                        if (info != null)
+                        {
+                            JLogger.Log(Enum.LogModule.Net, "IdSyncFightReply.ToUserId ", info.ToUserId.ToString());
+                        }
+                    }
+                }
+            }
+            else if (e.IsText)
+            {
+                JLogger.Log(Enum.LogModule.Net, string.Format("Receive: {0}", e.Data));
+            }
+        }
+
+        private void Socket_OnClose(object sender, CloseEventArgs e)
+        {
+            JLogger.Log(Enum.LogModule.Net, string.Format("Closed: StatusCode: {0}, Reason: {1}", e.StatusCode, e.Reason));
+            if (m_Close != null)
+            {
+                m_Close.Invoke(e.StatusCode.GetHashCode(), e.Reason);
+            }
+        }
+
+        private void Socket_OnError(object sender, ErrorEventArgs e)
+        {
+            JLogger.Log(Enum.LogModule.Net, string.Format("Error: {0}", e.Message));
+            if (m_Err != null)
+            {
+                m_Err.Invoke(e.Message);
+            }
+        }
+
+        public void Register(Commandcode.COMMAND_CODE msgid, Action<byte[]> action)
+        {
+            if (!m_Register.ContainsKey(msgid))
+            {
+                m_Register.Add(msgid, action);
+            }
+            else
+            {
+                m_Register[msgid] += action;
+            }
+        }
+
+        public void UnRegister(Commandcode.COMMAND_CODE msgid, Action<byte[]> action)
+        {
+            Action<byte[]> tmp;
+            if (m_Register.TryGetValue(msgid, out tmp))
+            {
+                tmp -= action;
+                m_Register.Remove(msgid);
+
+                if (tmp != null)
+                {
+                    m_Register.Add(msgid, tmp);
+                }
+            }
+        }
+
+        public void Broadcast(int msgid, byte[] buffer)
+        {
+            Action<byte[]> tmp;
+            if (m_Register.TryGetValue((Commandcode.COMMAND_CODE)msgid, out tmp))
+            {
+                tmp.Invoke(buffer);
+            }
+        }
+
+        public T GetMsg<T>(byte[] buffer) where T : IMessage, new()
+        {
+            try
+            {
+                CodedInputStream stream = new CodedInputStream(buffer);
+                T t = new T();
+                t.MergeFrom(stream);
+                return t;
+            }
+            catch(Exception exp)
+            {
+                JLogger.Error(Enum.LogModule.Net, $"error msg and type", typeof(T).ToString(), exp.ToString());
+            }
+            finally
+            {
+
+            }
+            return default(T);
+        }
+    }
+}

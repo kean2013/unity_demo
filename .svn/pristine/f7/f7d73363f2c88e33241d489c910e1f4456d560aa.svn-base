@@ -1,0 +1,33 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using Com.Linekong.Game.Message.Proto;
+using UnityEngine;
+using HotFix.Tool;
+
+namespace HotFix.Net
+{
+    using Common;
+    public class NetDataMgr : Singleton<NetDataMgr>
+    {
+        public AccountData Account;
+        public BagData Bag;
+        public ArmyUnitData ArmyUnit;
+        public FarmatTeamData FarmatTeam;
+        public ChapterData ChapterData;
+        public TaskData TaskData;
+        public BuildingData BuildingData;
+        public NetNpcData NetNpcData;
+
+        public override void OnInit()
+        {
+            Account = new AccountData();
+            Bag = new BagData();
+            ArmyUnit = new ArmyUnitData();
+            FarmatTeam = new FarmatTeamData();
+            ChapterData = new ChapterData();
+            TaskData = new TaskData();
+            BuildingData = new BuildingData();
+            NetNpcData = new NetNpcData();
+        }
+    }
+}

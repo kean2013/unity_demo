@@ -1,0 +1,29 @@
+/** This is an automatically generated class by FairyGUI. Please do not modify it. **/
+
+using FairyGUI;
+using FairyGUI.Utils;
+
+namespace Mail.MailUI
+{
+    public partial class UI_BtnMail : GButton
+    {
+        public Controller m_c_item;
+        public Controller m_c_red;
+        public GImage m_red;
+        public const string URL = "ui://kmi84jw2o1go5";
+
+        public static UI_BtnMail CreateInstance()
+        {
+            return (UI_BtnMail)UIPackage.CreateObject("MailUI", "BtnMail");
+        }
+
+        public override void ConstructFromXML(XML xml)
+        {
+            base.ConstructFromXML(xml);
+
+            m_c_item = GetController("c_item");
+            m_c_red = GetController("c_red");
+            m_red = (GImage)GetChild("red");
+        }
+    }
+}

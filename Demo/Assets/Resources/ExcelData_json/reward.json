@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 3,
+        "rewardNum": 3
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 4,
+        "rewardNum": 5
+      }
+    ],
+    "show": 1
+  },
+  {
+    "id": 2,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 4,
+        "rewardNum": 3
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 4,
+        "rewardNum": 6
+      }
+    ],
+    "show": 1
+  },
+  {
+    "id": 3,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 2,
+        "rewardNum": 3
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 4,
+        "rewardNum": 7
+      }
+    ],
+    "show": 1
+  },
+  {
+    "id": 4,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 2,
+        "rewardNum": 3
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 4,
+        "rewardNum": 8
+      }
+    ],
+    "show": 1
+  },
+  {
+    "id": 5,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 2,
+        "rewardNum": 3
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 4,
+        "rewardNum": 9
+      }
+    ],
+    "show": 1
+  },
+  {
+    "id": 6,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 2,
+        "rewardNum": 4000
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 4,
+        "rewardNum": 2000
+      }
+    ],
+    "show": 1
+  },
+  {
+    "id": 7,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 1,
+        "rewardNum": 10
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 2,
+        "rewardNum": 20
+      }
+    ],
+    "show": 1
+  },
+  {
+    "id": 8,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 1,
+        "rewardNum": 10
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 2,
+        "rewardNum": 30
+      }
+    ],
+    "show": 1
+  },
+  {
+    "id": 9,
+    "reward": [
+      {
+        "rewardType": 1,
+        "rewardId": 1,
+        "rewardNum": 10
+      },
+      {
+        "rewardType": 1,
+        "rewardId": 2,
+        "rewardNum": 40
+      }
+    ],
+    "show": 1
+  }
+]

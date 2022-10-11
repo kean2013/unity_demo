@@ -1,0 +1,31 @@
+/** This is an automatically generated class by FairyGUI. Please do not modify it. **/
+
+using FairyGUI;
+using FairyGUI.Utils;
+
+namespace Mail.MailUI
+{
+    public partial class UI_BtnGroup : GButton
+    {
+        public Controller m_c_redPoint;
+        public Controller m_c_number;
+        public GGraph m_redPoint;
+        public GTextField m_mailCount;
+        public const string URL = "ui://kmi84jw2o1go3";
+
+        public static UI_BtnGroup CreateInstance()
+        {
+            return (UI_BtnGroup)UIPackage.CreateObject("MailUI", "BtnGroup");
+        }
+
+        public override void ConstructFromXML(XML xml)
+        {
+            base.ConstructFromXML(xml);
+
+            m_c_redPoint = GetController("c_redPoint");
+            m_c_number = GetController("c_number");
+            m_redPoint = (GGraph)GetChild("redPoint");
+            m_mailCount = (GTextField)GetChild("mailCount");
+        }
+    }
+}

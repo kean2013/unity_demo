@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+// 客户端使用
+package hotFix.proto;
+
+// 用户登录、绑定平台，解绑平台公共消息请求体
+message AuthInfoRequest {
+  int64  user_id = 1;
+  int32 channel = 2;
+  string token = 3;
+};
+
+// 登录请求体 CTS-103
+message LoginRequest {
+  AuthInfoRequest login_info = 1;
+}
+// 登录返回体 STC-104
+message LoginReply {
+  int32 errno = 1;
+  int64 user_id = 2;
+  int64 player_id = 3;
+}

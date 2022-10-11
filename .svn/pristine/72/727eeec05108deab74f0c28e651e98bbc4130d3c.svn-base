@@ -1,0 +1,51 @@
+using HotFix.Enum;
+using HotFix.Event;
+using HotFix.Tool;
+using System;
+using UnityEngine;
+namespace HotFix.UI
+{
+    public class LoadingUIView : BaseUIView
+    {
+        private LoadingUIComp m_UiComp;
+
+        public LoadingUIView()
+        {
+            CreateWindow("LoadingUI", "Root");
+        }
+
+        public override void InitElements()
+        {
+            m_UiComp = new LoadingUIComp(WndComp);
+        }
+
+        public override void OnHide()
+        {
+        }
+
+        public override void OnShow(params object[] para)
+        {
+			//if(para[0]!= null)
+            //{
+            //    JLogger.Log(" test  "+ para[0]);
+            //}
+        }
+
+        public override void RegisterEvent()
+        {
+            EventMgr.Instance.Register(HEventType.LoadingProgressEvent, LoadingProgressBack);
+        }
+
+        public override void UnRegisterEvent()
+        {
+			EventMgr.Instance.UnRegister(HEventType.LoadingProgressEvent, LoadingProgressBack);
+        }
+
+        private void LoadingProgressBack(HEvent hEvent)
+        {
+            var data = hEvent as FloatEvent;
+            m_UiComp.Slider_Progress.value = data.Value;
+        }
+
+    }
+}

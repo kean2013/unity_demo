@@ -1,0 +1,35 @@
+[
+  {
+    "tag": 1,
+    "mailLevel": 1,
+    "mailType": 1,
+    "mailTitle": "王国增益开启",
+    "subTitle": "{0}{1}{2}开启了王国增益",
+    "mailContent": "执政官，{0}{1}{2}开启了王国增益，请抓紧时间合理利用",
+    "icon": "icon01",
+    "mailBase": "ditu01",
+    "rewardTag": 1
+  },
+  {
+    "tag": 2,
+    "mailLevel": 2,
+    "mailType": 1,
+    "mailTitle": "",
+    "subTitle": "",
+    "mailContent": "",
+    "icon": "",
+    "mailBase": "",
+    "rewardTag": 0
+  },
+  {
+    "tag": 3,
+    "mailLevel": 1,
+    "mailType": 2,
+    "mailTitle": "",
+    "subTitle": "",
+    "mailContent": "",
+    "icon": "",
+    "mailBase": "",
+    "rewardTag": 0
+  }
+]

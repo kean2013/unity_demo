@@ -1,0 +1,128 @@
+using FairyGUI;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
+using HotFix.Enum;
+using UnityEngine;
+
+public abstract class BaseUIView
+{
+    public string WindowName = "";
+    protected Window Wnd = new Window();
+    public GComponent WndComp = null;
+
+
+    private Dictionary<string, Queue<GComponent>> m_ChildPool = new Dictionary<string, Queue<GComponent>>();
+
+    public BaseUIView()
+    {
+    }
+
+    public GComponent CreateChild(string packageName, string rootName)
+    {
+        Queue<GComponent> pool;
+        m_ChildPool.TryGetValue(rootName, out pool);
+        if (pool == null)
+        {
+            return GetChild(packageName, rootName);
+        }
+        else
+        {
+            if (pool.Count > 0)
+            {
+                var child = pool.Dequeue();
+                WndComp.AddChild(child);
+                return child;
+            }
+            else
+            {
+                return GetChild(packageName, rootName);
+            }
+        }
+    }
+
+    public void RemoveChild(GComponent child)
+    {
+        var key = child.packageItem.name;
+        WndComp.RemoveChild(child);
+        if (m_ChildPool.ContainsKey(key))
+        {
+            m_ChildPool[key].Enqueue(child);
+        }
+        else
+        {
+            var pool = new Queue<GComponent>();
+            pool.Enqueue(child);
+            m_ChildPool.Add(key, pool);
+        }
+    }
+
+    private GComponent GetChild(string packageName, string rootName)
+    {
+        AddUIPackage(packageName);
+        var gObject = UIPackage.CreateObject(packageName, rootName);
+        gObject.Center();
+        var childCom = gObject.asCom;
+        childCom.name = packageName;
+        WndComp.AddChild(childCom);
+        return childCom;
+    }
+
+    #region 需要子类实现的
+
+    public abstract void InitElements();
+    public abstract void RegisterEvent();
+    public abstract void UnRegisterEvent();
+    public abstract void OnShow(params object[] para);
+    public abstract void OnHide();
+
+    #endregion
+
+    #region 包处理
+
+    private void AddUIPackage(string packageName)
+    {
+        var mainPackage = UIPackage.AddPackage($"Assets/Resources/UIPackage/{packageName}");
+        var dependencies = mainPackage.dependencies;
+        foreach (var kv in dependencies)
+        {
+            UIPackage.AddPackage($"Assets/Resources/UIPackage/{kv["name"]}");
+        }
+    }
+
+    #endregion
+
+
+    #region uimagr call
+
+    protected void CreateWindow(string packageName, string rootName, bool isAsync = false)
+    {
+        AddUIPackage(packageName);
+        var gObject = UIPackage.CreateObject(packageName, rootName);
+        gObject.Center();
+        WndComp = gObject.asCom;
+        Wnd.contentPane = WndComp;
+        Wnd.name = packageName;
+        Wnd.contentPane.name = packageName;
+        GRoot.inst.AddChild(Wnd);
+        WindowName = packageName;
+        InitElements();
+    }
+
+    public void Open(params object[] para)
+    {
+        Wnd.Show();
+        OnShow(para);
+        RegisterEvent();
+    }
+
+    public void Close()
+    {
+        Wnd.Hide();
+        OnHide();
+        UnRegisterEvent();
+        GRoot.inst.RemoveChild(WndComp);
+    }
+
+    #endregion
+}

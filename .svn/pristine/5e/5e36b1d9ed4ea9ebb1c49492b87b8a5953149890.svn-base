@@ -1,0 +1,60 @@
+using Com.Linekong.Game.Message.Proto;
+using HotFix.Enum;
+using HotFix.Event;
+using HotFix.Net;
+using HotFix.Tool;
+using System.Collections.Generic;
+using UnityEngine;
+namespace HotFix.UI
+{
+    using Common;
+    using HotFix.Proto;
+
+    public class LoginUIMgr : Singleton<LoginUIMgr>
+    {
+        private bool isConnecting = false;
+        public override void OnInit()
+        {
+            FakeServerMgr.Instance.Register(COMMAND_CODE.IdLoginRequest, COMMAND_CODE.IdLoginReply, new LoginReply()
+            {
+                Errno = 0,
+                UserId = 1,
+                PlayerId = 2,
+            });
+
+            NetMgr.Instance.Register(COMMAND_CODE.IdLoginReply, OnLoginReply);
+        }
+        public override void OnUnInit()
+        {
+            NetMgr.Instance.UnRegister(COMMAND_CODE.IdLoginReply, OnLoginReply);
+        }
+
+        #region send msg
+        public void LoginRequest(int channel, int userId, string token)
+        {
+            var login = new LoginRequest();
+            var info = new AuthInfoRequest();
+            info.Channel = channel;
+            info.UserId = userId;
+            info.Token = token;
+            login.LoginInfo = info;
+            NetMgr.Instance.Send(COMMAND_CODE.IdLoginRequest, login);
+        }
+        #endregion
+
+        #region recv msg
+
+        private void OnLoginReply(byte[] msg)
+        {
+            var info = NetMgr.Instance.GetMsg<LoginReply>(msg);
+            if(info != null)
+            {
+                Debug.Log($"{info.Errno},{info.UserId},{info.PlayerId}");
+
+                UIMgr.Instance.Open<MailUIView>();
+                UIMgr.Instance.Close<LoginUIView>();
+            }
+        }
+        #endregion
+    }
+}

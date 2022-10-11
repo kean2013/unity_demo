@@ -1,0 +1,28 @@
+using HotFix.Proto;
+using HotFix.Event;
+using HotFix.Mgr;
+using HotFix.Net;
+using HotFix.Tool;
+using UnityEngine;
+using HotFix.Common;
+namespace HotFix.UI
+{
+    public class MailUIMgr : Singleton<MailUIMgr>
+    {        
+        public override void OnInit()
+        {
+			//NetMgr.Instance.Register(COMMAND_CODE.IdLoginReply, OnLoginReply);
+        }
+        public override void OnUnInit()
+        {
+			//NetMgr.Instance.UnRegister(COMMAND_CODE.IdLoginReply, OnLoginReply);
+        }
+		
+        #region 发送消息
+		
+		#endregion
+        #region 消息回调
+		
+		#endregion
+    }
+}

@@ -1,0 +1,27 @@
+using FairyGUI;
+using HotFix.Tool;
+
+namespace HotFix.UI
+{
+  
+    public partial class LoadingUIComp : BaseUIComp
+    {
+        GComponent m_Comp;
+
+        public GProgressBar Slider_Progress;
+
+        
+        public LoadingUIComp(GComponent c)
+        {
+            m_Comp = c;
+            InitComp();
+        }
+
+        public void InitComp()
+        {
+            Slider_Progress = UITools.FguiGetChild(m_Comp, "progressBar").asProgress;
+           
+
+        }
+    }
+}
